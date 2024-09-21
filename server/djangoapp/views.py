@@ -14,6 +14,7 @@ import logging
 import json
 from django.views.decorators.csrf import csrf_exempt
 from .populate import initiate
+from .models import CarMake, CarModel
 
 
 # Get an instance of a logger
@@ -73,6 +74,27 @@ def registration(request):
         data = {"userName":username, "status": "Username already exists"}
         return JsonResponse(data)
 # ...
+
+
+def get_cars(request):
+    # Count the number of CarMake records
+    count = CarMake.objects.filter().count() # No need to filter; count() works directly
+    print("CarMake count:", count)
+    
+    # Populate data if no CarMake records exist
+    if count == 0:
+        try:
+            initiate()  # Call the populate function
+            print("Database populated with initial data.")
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    # Fetch car models with related car makes
+    car_models = CarModel.objects.select_related('car_make').all()  # Fetch all related objects
+    cars = [{"CarModel": car_model.name, "CarMake": car_model.car_make.name} for car_model in car_models]
+
+    return JsonResponse({"CarModels": cars})
+
 
 # # Update the `get_dealerships` view to render the index page with
 # a list of dealerships
