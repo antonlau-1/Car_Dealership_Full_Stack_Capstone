@@ -1,8 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const fs = require('fs');
-const  cors = require('cors')
-const app = express()
+const  cors = require('cors');
+const app = express();
 const port = 3030;
 
 app.use(cors())
@@ -34,7 +34,7 @@ try {
 
 // Express route to home
 app.get('/', async (req, res) => {
-    res.send("Welcome to the Mongoose API")
+    res.send("Welcome to the Mongoose API");
 });
 
 // Express route to fetch all reviews
@@ -63,7 +63,7 @@ app.get('/fetchDealers', async (req, res) => {
     const dealership = await Dealerships.find();
     res.json(dealership);
   } catch (error) {
-    res.status(500).json({ error: "Error fetching dealerships."})
+    res.status(500).json({ error: "Error fetching dealerships."});
   }
 });
 
@@ -73,7 +73,7 @@ app.get('/fetchDealers/:state', async (req, res) => {
     const dealers = await Dealerships.find({ state: req.params.state});
     res.json(dealers);
   } catch (error) {
-    res.status(500).json({ error: "Invalid state."})
+    res.status(500).json({ error: "Invalid state."});
   }
 });
 
@@ -83,15 +83,15 @@ app.get('/fetchDealer/:id', async (req, res) => {
     const dealers = await Dealerships.find({ id: req.params.id});
     res.json(dealers);
   } catch (error) {
-    res.status(500).json({ error: "Invalid id."})
+    res.status(500).json({ error: "Invalid id."});
   }
 });
 
 //Express route to insert review
 app.post('/insert_review', express.raw({ type: '*/*' }), async (req, res) => {
   data = JSON.parse(req.body);
-  const documents = await Reviews.find().sort( { id: -1 } )
-  let new_id = documents[0]['id']+1
+  const documents = await Reviews.find().sort( { id: -1 } );
+  let new_id = documents[0]['id']+1;
 
   const review = new Reviews({
 		"id": new_id,
