@@ -15,18 +15,18 @@ urlpatterns = [
     path('get_cars/', views.get_cars, name='getcars'),
     path('get_dealers', views.get_dealerships, name='getdealers'),
     path(
-        'get_dealers/<str:state>', 
-        views.get_dealerships, 
+        'get_dealers/<str:state>',
+        views.get_dealerships,
         name='getdealersbystate'
     ),
     path(
-        'dealer/<int:dealer_id>', 
-        views.get_dealer_details, 
+        'dealer/<int:dealer_id>',
+        views.get_dealer_details,
         name='getdealer'
     ),
     path(
-        'reviews/dealer/<int:dealer_id>', 
-        views.get_dealer_reviews, 
+        'reviews/dealer/<int:dealer_id>',
+        views.get_dealer_reviews,
         name='dealerreview'
     ),
     path('add_review', views.add_review, name='addreview'),

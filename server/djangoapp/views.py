@@ -68,10 +68,10 @@ def registration(request):
 
     if not usernameExists:
         user = User.objects.create_user(
-            username=username, 
-            first_name=firstName, 
-            last_name=lastName, 
-            password=password, 
+            username=username,
+            first_name=firstName,
+            last_name=lastName,
+            password=password,
             email=email,
         )
         login(request, user)
@@ -79,7 +79,7 @@ def registration(request):
         return JsonResponse(data)
     else:
         data = {
-            "userName": username, 
+            "userName": username,
             "status": "Username already exists"
         }
         return JsonResponse(data)
@@ -101,17 +101,17 @@ def get_cars(request):
     # Fetch car models with related car makes
     car_models = CarModel.objects.select_related('car_make').all()
     cars = [{
-        "CarModel": car_model.name, 
-        "CarMake": car_model.car_make.name} 
+        "CarModel": car_model.name,
+        "CarMake": car_model.car_make.name}
         for car_model in car_models
     ]
 
     return JsonResponse({"CarModels": cars})
 
 
-# Update the `get_dealerships` render list of dealerships 
+# Update the `get_dealerships` render list of dealerships
 # all by default, particular state if state is passed
-def get_dealerships(request, state = "All"):
+def get_dealerships(request, state="All"):
     if state == "All":
         endpoint = "/fetchDealers"
     else:
@@ -167,14 +167,14 @@ def add_review(request):
             print(f"Unexpected {e=}, {type(e)=}")
             return JsonResponse(
                 {
-                    "status": 401, "message": 
+                    "status": 401, "message":
                     "Error in posting review."
                 }
             )
     else:
         JsonResponse(
             {
-                "status": 403, 
+                "status": 403,
                 "message": "You must be logged in to post a review."
             }
         )
